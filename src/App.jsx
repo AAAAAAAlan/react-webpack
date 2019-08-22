@@ -1,9 +1,10 @@
 // App.jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
+import styles from './styles.css';
 const App = () => {
     return (
-        <div>
+        <div className={styles.text}>
             <h1> React and Webpack</h1>
         </div>
     );
