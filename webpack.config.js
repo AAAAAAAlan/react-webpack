@@ -1,4 +1,6 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const StyleLintPlugin = require('stylelint-webpack-plugin');
+const stylintOptions = require('./.stylelintrc.js');
 const path = require('path');
 module.exports = {
   resolve: {
@@ -79,6 +81,7 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: "src/index.html",
       filename: "index.html"
-    })
+    }),
+    // new StyleLintPlugin(stylintOptions),
   ]
 };
