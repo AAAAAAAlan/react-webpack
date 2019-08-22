@@ -7,6 +7,11 @@ module.exports = {
   module: {
       rules: [
           {
+            test: /\.tsx?$/,
+            exclude: /node_modules/,
+            use: 'ts-loader',
+          },
+          {
               test: /\.jsx?$/, // jsx/js文件的正则
               exclude: /node_modules/, // 排除 node_modules 文件夹
               use: {
