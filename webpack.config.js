@@ -18,7 +18,10 @@ module.exports = {
                       presets: [
                           // 添加 preset-react
                           require.resolve('@babel/preset-react'),
-                          [require.resolve('@babel/preset-env'), {modules: false}]
+                          [require.resolve('@babel/preset-env'), {modules: false}],
+                          {
+                            useBuiltIns: 'usage',
+                          }
                       ],
                       cacheDirectory: true
                   }
