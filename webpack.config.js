@@ -1,5 +1,5 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const autoprefixer = require('autoprefixer');
+const path = require('path');
 module.exports = {
   resolve: {
     extensions: [".wasm", ".mjs", ".js", ".json", ".jsx"]
@@ -14,7 +14,8 @@ module.exports = {
       //   },
       {
         test: /\.jsx?$/, // jsx/js文件的正则
-        exclude: /node_modules/, // 排除 node_modules 文件夹
+				exclude: /node_modules/, // 排除 node_modules 文件夹
+				include: [path.resolve(__dirname, 'src')],
         use: {
           // loader 是 babel
           loader: "babel-loader",
@@ -35,7 +36,17 @@ module.exports = {
             cacheDirectory: true
           }
         }
-      },
+			},
+			{
+				test: /\.jsx?$/,
+				loader: 'eslint-loader',
+				exclude: /node_modules/,
+				include: [path.resolve(__dirname, 'src')],
+				options: {
+					// 在这里的配置参数会传递到eslint的CLIEngine
+					formatter: require('eslint-friendly-formatter') //指定错误报告格式规范
+				}
+			},
       {
         test: /\.css$/,
         exclude: /node_modules/,
