@@ -1,4 +1,5 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const webpack = require('webpack');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const stylintOptions = require('./.stylelintrc.js');
 const path = require('path');
@@ -10,11 +11,21 @@ module.exports = {
       '@': path.resolve('./src'),
     }
   },
-  entry: "./src/index.jsx",
+  entry: ["./src/index.jsx","./src/dev.js"],
   // 配置CDN域名和路径
   // output: {
   //   publicPath: 'http://xxx.com'
   // },
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    port: 8080,
+    open: false,
+    hot: true,
+    inline: true,
+    // proxy: {
+    //   '/api': 'http://xxxx.com',
+    // }
+  },
   module: {
     rules: [
       //   { //ts 配置
@@ -27,7 +38,9 @@ module.exports = {
         include: [path.resolve(__dirname, './src/assets')],
         use: {
           loader: 'image-webpack-loader',
-          enfore: 'pre',
+          options: {
+            enfore: 'pre',
+          }
         }
       },
       {
@@ -108,6 +121,13 @@ module.exports = {
           noquotes: false,
           // iesafe: true, //需要兼容IE
         }
+      },
+      {
+        test: /\.(eot|woff|ttf|woff2|appcache|mp4|pdf)(\?|$)/,
+        loader: 'file-loader',
+        query: {
+          name: 'assets/[name].[hash:7].[ext]',
+        }
       }
     ]
   },
@@ -116,6 +136,7 @@ module.exports = {
       template: "src/index.html",
       filename: "index.html"
     }),
+    new webpack.HotModuleReplacementPlugin(),
     // new StyleLintPlugin(stylintOptions),
   ]
 };
