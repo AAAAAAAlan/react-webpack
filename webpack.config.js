@@ -4,9 +4,17 @@ const stylintOptions = require('./.stylelintrc.js');
 const path = require('path');
 module.exports = {
   resolve: {
-    extensions: [".wasm", ".mjs", ".js", ".json", ".jsx"]
+    extensions: [".wasm", ".mjs", ".js", ".json", ".jsx"],
+    alias: {
+      '@assets': path.resolve(__dirname, './src/assets'),
+      '@': path.resolve('./src'),
+    }
   },
   entry: "./src/index.jsx",
+  // 配置CDN域名和路径
+  // output: {
+  //   publicPath: 'http://xxx.com'
+  // },
   module: {
     rules: [
       //   { //ts 配置
@@ -14,6 +22,14 @@ module.exports = {
       //     exclude: /node_modules/,
       //     use: 'ts-loader',
       //   },
+      {
+        test: /\.(png)|(jpg)|(git)|(svg)$/,
+        include: [path.resolve(__dirname, './src/assets')],
+        use: {
+          loader: 'image-webpack-loader',
+          enfore: 'pre',
+        }
+      },
       {
         test: /\.jsx?$/, // jsx/js文件的正则
 				exclude: /node_modules/, // 排除 node_modules 文件夹
@@ -74,6 +90,24 @@ module.exports = {
           },
           "less-loader" // 将 Less 编译为 CSS
         ]
+      },
+      {
+        test: /\.(png)|(jpg)|(gif)$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 3*1024 //不超过3K大小
+          }
+        }
+      },
+      {
+        test: /\.{svg}$/,
+        loader: 'svg-url-loader',
+        options: {
+          limit: 10*1024,
+          noquotes: false,
+          // iesafe: true, //需要兼容IE
+        }
       }
     ]
   },
