@@ -4,7 +4,7 @@
   "description": "a simple react-webpack",
   "main": ".src/index.js",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
     "start": "webpack-dev-server --config ./webpack.config.js --open"
   },
   "keywords": [],
@@ -23,6 +23,7 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
+    "cross-env": "^5.2.0",
     "eslint": "^6.2.1",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-friendly-formatter": "^4.0.1",
@@ -41,7 +42,8 @@
     "url-loader": "^2.1.0",
     "webpack": "^4.39.2",
     "webpack-cli": "^3.3.7",
-    "webpack-dev-server": "^3.8.0"
+    "webpack-dev-server": "^3.8.0",
+    "webpack-merge": "^4.2.1"
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
